@@ -2,6 +2,7 @@ package Peuffier.Dokumacioglu.morpion;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,10 +11,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class TicTacToeGame extends Application {
-    private Label resultLabel = new Label();
+    static Label label;
     @Override
     public void start(Stage primaryStage) {
 
+        label = new Label();
         BorderPane root = new BorderPane();
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10));
@@ -29,14 +31,17 @@ public class TicTacToeGame extends Application {
         Button restartButton = new Button("Restart");
         restartButton.setOnAction(event -> {
             TicTacToeModel.getInstance().restart();
-        });
-        resultLabel.setText(TicTacToeModel.getInstance().getEndOfGameMessage().get());
+            label.setText("Partie en cours ...");
+                });
         BorderPane gamePane = new BorderPane();
+        BorderPane bottomPane = new BorderPane();
         gamePane.setCenter(grid);
-        gamePane.setBottom(restartButton);
-        gamePane.setTop(resultLabel);
+        bottomPane.setLeft(restartButton);
+        label.setText("Partie en cours ...");
+        bottomPane.setCenter(label);
+        BorderPane.setAlignment(label, Pos.CENTER);
+        gamePane.setBottom(bottomPane);
         gamePane.setPadding(new Insets(10));
-        // Ajouter le conteneur au BorderPane principal
         root.setCenter(gamePane);
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Tic Tac Toe");
@@ -44,6 +49,9 @@ public class TicTacToeGame extends Application {
     }
     public static void main(String[] args) {
         launch(args);
+
     }
+
+
 
 }

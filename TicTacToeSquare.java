@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 
@@ -64,6 +65,13 @@ public class TicTacToeSquare extends TextField {
             }
             if (model.gameOver().get()) {
                 setStyle("-fx-background-color: cyan;");
+                Label label = TicTacToeGame.label;
+                if (model.boardFull().get()&& !winnerProperty.get()){
+                    label.setText("Match nul !");
+                }
+                else {
+                    label.setText("Le joueur " + ownerProperty.get() + " a gagné !");
+                }
             }
         });
 

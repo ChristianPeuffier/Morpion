@@ -20,10 +20,17 @@ public class TicTacToeController {
         square.setOnMouseClicked(event -> {
             if(square.ownerProperty().get()==Owner.NONE){
                 model.play(row, column);
-                view.nbrCasesJ1.setText("Joueur 1 : " + model.getScore(Owner.FIRST).intValue());
-                view.nbrCasesJ2.setText("Joueur 2 : " + model.getScore(Owner.SECOND).intValue());
+                view.nbrCasesJ1.setText(model.getScore(Owner.FIRST).intValue()+" cases pour X");
+                view.nbrCasesJ2.setText(model.getScore(Owner.SECOND).intValue()+" cases pour O");
                 view.nbrCasesLibres.setText("Cases libres : " + model.getScore(Owner.NONE).intValue());
-
+                if(model.turnProperty().get()==Owner.FIRST){
+                    view.nbrCasesJ1.setStyle("-fx-background-color: cyan");
+                    view.nbrCasesJ2.setStyle("-fx-background-color: red");
+                }
+                else if(model.turnProperty().get()==Owner.SECOND){
+                    view.nbrCasesJ1.setStyle("-fx-background-color: red");
+                    view.nbrCasesJ2.setStyle("-fx-background-color: cyan");
+                }
             }
             if(model.gameOver().get()){
                 square.setStyle("-fx-background-color: cyan;");
@@ -32,12 +39,15 @@ public class TicTacToeController {
                 }
                 else if (square.winnerProperty().get()){
                     if (square.ownerProperty().get() == Owner.FIRST){
-                        view.resultat.setText("Joueur 1 gagne !");
+                        model.setWinner(Owner.FIRST);
+                        view.resultat.setText(model.getEndOfGameMessage().get());
                     }
                     else if (square.ownerProperty().get() == Owner.SECOND){
                         view.resultat.setText("Joueur 2 gagne !");
                     }
                 }
+                view.nbrCasesJ1.setStyle("-fx-background-color: red");
+                view.nbrCasesJ2.setStyle("-fx-background-color: red");
             }
         });
 
@@ -49,6 +59,9 @@ public class TicTacToeController {
                 else {
                     square.setStyle("-fx-background-color: red;");
                 }
+            }
+            else {
+                square.setStyle("-fx-background-color: red;");
             }
         });
 

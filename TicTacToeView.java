@@ -38,8 +38,8 @@ public class TicTacToeView {
         BorderPane bottomPane = new BorderPane();
 
         nbrCasesLibres.setText("Cases libres : " + TicTacToeModel.getInstance().getScore(Owner.NONE).intValue());
-        nbrCasesJ1.setText("Joueur 1 : " + TicTacToeModel.getInstance().getScore(Owner.FIRST).intValue());
-        nbrCasesJ2.setText("Joueur 2 : " + TicTacToeModel.getInstance().getScore(Owner.SECOND).intValue());
+        nbrCasesJ1.setText(TicTacToeModel.getInstance().getScore(Owner.FIRST).intValue()+" cases pour X");
+        nbrCasesJ2.setText(TicTacToeModel.getInstance().getScore(Owner.SECOND).intValue()+" cases pour O");
 
         nbrCasesJ1.setStyle("-fx-background-color: cyan");
         nbrCasesJ2.setStyle("-fx-background-color: red");

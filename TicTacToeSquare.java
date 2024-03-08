@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class TicTacToeSquare extends TextField {
     private static final TicTacToeModel model = TicTacToeModel.getInstance();
@@ -42,57 +43,21 @@ public class TicTacToeSquare extends TextField {
                     setText("");
                     break;
             }
-            setEditable(newValue == Owner.NONE);
             setFont(Font.font(Math.min(getHeight(), getWidth()) * 0.4)); // Taille de la police adaptative
             setAlignment(Pos.CENTER);
-
         });
 
 
         winnerProperty.addListener((observable, oldValue, newValue) -> {
-            if (Boolean.TRUE.equals(newValue)) {
+            if (newValue) {
                 setStyle("-fx-background-color: cyan;");
-                setEditable(false);
-            }
-            else {
-                setStyle("");
-            }
-        });
-
-        setOnMouseClicked(event -> {
-            if (ownerProperty.get() == Owner.NONE) {
-                model.play(row, column);
-            }
-            if (model.gameOver().get()) {
-                setStyle("-fx-background-color: cyan;");
-                Label label = TicTacToeGame.label;
-                if (model.boardFull().get()&& !winnerProperty.get()){
-                    label.setText("Match nul !");
-                }
-                else {
-                    label.setText("Le joueur " + ownerProperty.get() + " a gagné !");
-                }
-            }
-        });
-
-        setOnMouseEntered(event -> {
-            if(!model.gameOver().get()) {
-                if (model.legalMove(row, column).get()) {
-                    setStyle("-fx-background-color: green;");
-                }
-                else {
-                    setStyle("-fx-background-color: red;");
-                }
-            }
-
-        });
-
-        setOnMouseExited(event -> {
-            if (winnerProperty.get()) {
-                setStyle("-fx-background-color: cyan;");
+                setFont(Font.font("", FontWeight.BOLD,Math.min(getHeight(), getWidth()) * 0.4)); // Taille de la police adaptative
             } else {
                 setStyle("");
             }
         });
+
+
     }
+
 }

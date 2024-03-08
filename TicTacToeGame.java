@@ -10,48 +10,29 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+
 public class TicTacToeGame extends Application {
-    static Label label;
+    static Label resultat = new Label();
+    static Label nbrCasesJ1 = new Label();
+    static Label nbrCasesJ2 = new Label();
+    static Label nbrCasesLibres = new Label();
+    static TicTacToeView view;
+    static TicTacToeModel model;
+
+    static Button restartButton = new Button("Restart");
     @Override
     public void start(Stage primaryStage) {
-
-        label = new Label();
-        BorderPane root = new BorderPane();
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10));
-        grid.setHgap(10);
-        grid.setVgap(10);
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                TicTacToeSquare square = new TicTacToeSquare(i, j);
-                grid.add(square, j, i);
-
-            }
-        }
-        Button restartButton = new Button("Restart");
-        restartButton.setOnAction(event -> {
-            TicTacToeModel.getInstance().restart();
-            label.setText("Partie en cours ...");
-                });
-        BorderPane gamePane = new BorderPane();
-        BorderPane bottomPane = new BorderPane();
-        gamePane.setCenter(grid);
-        bottomPane.setLeft(restartButton);
-        label.setText("Partie en cours ...");
-        bottomPane.setCenter(label);
-        BorderPane.setAlignment(label, Pos.CENTER);
-        gamePane.setBottom(bottomPane);
-        gamePane.setPadding(new Insets(10));
-        root.setCenter(gamePane);
-        primaryStage.setScene(new Scene(root));
+        model = TicTacToeModel.getInstance();
+        view = new TicTacToeView();
+        TicTacToeController controller = new TicTacToeController(model, view);
+        primaryStage.setScene(view.getScene());
         primaryStage.setTitle("Tic Tac Toe");
         primaryStage.show();
     }
+
     public static void main(String[] args) {
         launch(args);
-
     }
-
 
 
 }

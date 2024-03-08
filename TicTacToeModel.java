@@ -116,7 +116,7 @@ public class TicTacToeModel {
      * Jouer dans la case (row, column) quand c'est possible.
      */
     public void play(int row, int column) {
-        if (validSquare(row, column)) {
+        if (validSquare(row, column) && legalMove(row, column).get()) {
             board[row][column].set(turn.get());
             nextPlayer();
         }
